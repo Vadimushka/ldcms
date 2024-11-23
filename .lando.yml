@@ -1,0 +1,30 @@
+name: laravel-dcms
+recipe: laravel
+config:
+  via: nginx
+  webroot: public
+  cache: redis
+  database: mysql
+
+services:
+  sendmailhog:
+    type: mailhog
+
+  pma:
+    type: phpmyadmin
+    ssl: true
+    hosts:
+      - database
+
+  nodeservice:
+    type: node:20
+
+proxy:
+  sendmailhog:
+    - mailhog.lndo.site
+  pma:
+    - pma.lndo.site
+
+tooling:
+  npm:
+    service: nodeservice
